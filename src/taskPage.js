@@ -1,11 +1,13 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const TaskPage = ()=>{
     const [taskTitle,setTaskTitle] = useState('')
     const [error,setError] = useState('')
     const [task,setTask] = useState([]) 
     const userData = JSON.parse(localStorage.getItem('userData'))
+    const navigate = useNavigate()
 
     useEffect(()=>{
        getTask()
@@ -63,11 +65,20 @@ const TaskPage = ()=>{
         const local = utcDate.toLocaleString()
         return local
     }
-
-
+    
+    const handleLogout = ()=>{
+        localStorage.removeItem('userData')
+        navigate('/')
+    }
     return(
         <>
-            <h1>Welcome {userData.name}</h1>
+             <div style={{display:'flex',justifyContent:"space-between"}}>
+                <h1>Welcome {userData.name}</h1>
+                <div style={{display:'flex',height:'50px'}}>
+                    <div style={{backgroundImage:`url(${userData.image})`,backgroundSize:'contain',borderRadius:'45%',height:'45px',width:'45px'}}></div>
+                    <p onClick={handleLogout} style={{marginTop:'15px'}}>Logout</p>
+                </div>
+            </div>
             <h1 style={{textAlign:'center'}}>Tasks</h1>
             <div>
                 <h3>Task List</h3>
