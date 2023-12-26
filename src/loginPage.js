@@ -10,9 +10,11 @@ const LoginPage = ()=>{
     const navigate = useNavigate();
 
     useEffect(()=>{
+    if(userData!=null){
         localStorage.setItem('userData',JSON.stringify(userData))
         navigate('/task')
         window.location.reload()
+    }
     },[userData])
 
     const handleLogin = (credentialResponse)=>{
